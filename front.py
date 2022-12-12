@@ -88,7 +88,7 @@ class DemoRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(self):
         """Handle an HTTP GET request."""
         mapping = {
-            "/": lambda: (200, "OK CLOUD COMPUTING UNSA"),  # Return HTTP 200 response.
+            "/": lambda: (200, "OK"),  # Return HTTP 200 response.
             "/service": CpuBurner().handle_http_request,
         }
         if self.path not in mapping:
@@ -98,8 +98,8 @@ class DemoRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         (code, response) = mapping[self.path]()
         self.send_response(code)
         self.end_headers()
-        self.wfile.write(response)
-        self.wfile.close()
+        self.wfile.write(response.encode())
+        
 
 
 class DemoHttpServer(SocketServer.ThreadingMixIn,
